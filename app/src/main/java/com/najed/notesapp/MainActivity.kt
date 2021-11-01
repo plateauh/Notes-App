@@ -1,5 +1,6 @@
 package com.najed.notesapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         val messageEditText = findViewById<EditText>(R.id.message_et)
         val submitButton = findViewById<Button>(R.id.submit_btn)
         submitButton.setOnClickListener {
-            val isSubmitted = DBHelper(applicationContext).storeNote(messageEditText.text.toString())
+            val isSubmitted = DBHelper(applicationContext).storeNote("T1", messageEditText.text.toString())
             if (isSubmitted)
                 Toast.makeText(this, "Note added successfully!", Toast.LENGTH_SHORT).show()
             else
