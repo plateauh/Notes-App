@@ -7,13 +7,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.najed.notesapp.databinding.NoteItemBinding
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class Adapter(private val context: Context,
+              private val activity: MainActivity,
               private var notesList: List<Note>): RecyclerView.Adapter<Adapter.ItemViewHolder>() {
     class ItemViewHolder(val binding: NoteItemBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -31,7 +31,7 @@ class Adapter(private val context: Context,
                 noteLl.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 
             editBtn.setOnClickListener {
-                Alert(notesList[position], context)
+                activity.alert(notesList[position])
             }
 
             deleteBtn.setOnClickListener {
@@ -48,7 +48,7 @@ class Adapter(private val context: Context,
 
     override fun getItemCount() = notesList.size
 
-    fun update() {
+    private fun update() {
         notifyDataSetChanged()
     }
 }
