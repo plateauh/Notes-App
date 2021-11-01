@@ -19,4 +19,8 @@ class Adapter(private val notesList: ArrayList<String>): RecyclerView.Adapter<Ad
     }
 
     override fun getItemCount() = notesList.size
+
+    fun update() {
+        notifyDataSetChanged()
+    }
 }

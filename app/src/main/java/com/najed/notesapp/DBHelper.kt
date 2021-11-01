@@ -11,24 +11,29 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, "notes.db", null, 1)
     private var SQLiteDatabase: SQLiteDatabase = writableDatabase
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL("create table Notes (Title text, Content text)")
+        db?.execSQL("create table Notes (Content text)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         TODO("Not yet implemented")
     }
 
-    fun storeNote (title: String, content: String): Boolean {
+    fun storeNote(content: String): Boolean {
         val contentValues = ContentValues()
-        contentValues.put("Title", title)
         contentValues.put("Content", content)
         var status = SQLiteDatabase.insert("Notes", null, contentValues)
         return status != -1L
     }
 
-    fun getNote (title: String): String {
-        val cursor: Cursor = SQLiteDatabase.query("Notes", null, "Title=?", arrayOf(title), null, null, null)
-        cursor.moveToFirst()
-        return cursor.getString(cursor.getColumnIndex("Content"))
+    fun getAllNotes(): ArrayList<String> {
+        val notes = arrayListOf<String>()
+        val cursor: Cursor = SQLiteDatabase.query("Notes", null, null, null, null, null, null)
+        if (cursor.count != 0){
+            cursor.moveToFirst()
+            do {
+                notes.add(cursor.getString(cursor.getColumnIndex("Content")))
+            } while (cursor.moveToNext())
+        }
+        return notes
     }
 }
