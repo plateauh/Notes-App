@@ -24,6 +24,8 @@ class Adapter(private val context: Context,
 
             if (position % 2 == 0)
                 noteLl.setBackgroundColor(ContextCompat.getColor(context, R.color.gray))
+            else
+                noteLl.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 
             editBtn.setOnClickListener {
                 Alert(notesList[position], context, applicationContext)
@@ -35,6 +37,7 @@ class Adapter(private val context: Context,
                 if (isDeleted) Toast.makeText(context, "Note deleted successfully", Toast.LENGTH_SHORT).show()
                 update()
             }
+
         }
     }
 

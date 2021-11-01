@@ -14,6 +14,7 @@ class Alert (private val currentNote: String,
         val layoutInflater = LayoutInflater.from(context)
         val dialogLayout = layoutInflater.inflate(R.layout.alert_layout, null)
         val editText = dialogLayout.findViewById<EditText>(R.id.new_text_et)
+        editText.setText(currentNote)
         dialogBuilder.setView(dialogLayout)
         dialogBuilder.setPositiveButton("save") { _, _ ->
             val isUpdated = DBHelper(applicationContext).updateNote(currentNote, editText.text.toString())

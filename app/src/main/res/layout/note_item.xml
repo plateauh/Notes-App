@@ -9,24 +9,31 @@
 
     <TextView
         android:id="@+id/note_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="7"
         android:gravity="center"
         android:text="Note content" />
 
-    <ImageButton
-        android:id="@+id/edit_btn"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:srcCompat="@drawable/ic_baseline_edit_24" />
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/delete_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        app:srcCompat="@drawable/ic_baseline_delete_24" />
+        <ImageButton
+            android:id="@+id/edit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_baseline_edit_24" />
+
+        <ImageButton
+            android:id="@+id/delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_baseline_delete_24" />
+    </LinearLayout>
+
 </LinearLayout>
