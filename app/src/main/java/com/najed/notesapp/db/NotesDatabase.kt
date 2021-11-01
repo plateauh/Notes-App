@@ -1,4 +1,4 @@
-package com.najed.notesapp
+package com.najed.notesapp.db
 
 import android.content.Context
 import androidx.room.Database
@@ -12,7 +12,7 @@ abstract class NotesDatabase: RoomDatabase() {
         @Volatile
         private var INSTANCE: NotesDatabase? = null
 
-        fun getInstance(context: Context): NotesDatabase{
+        fun getInstance(context: Context): NotesDatabase {
             val tempInstance = INSTANCE
             if(tempInstance != null){
                 return tempInstance

@@ -1,4 +1,4 @@
-package com.najed.notesapp
+package com.najed.notesapp.db
 
 import androidx.room.*
 
