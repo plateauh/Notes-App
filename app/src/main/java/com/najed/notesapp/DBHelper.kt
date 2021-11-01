@@ -36,4 +36,16 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, "notes.db", null, 1)
         }
         return notes
     }
+
+    fun updateNote(oldContent: String, newContent: String): Boolean {
+        val contentValues = ContentValues()
+        contentValues.put("Content", newContent)
+        val status = SQLiteDatabase.update("Notes", contentValues, "Content=?", arrayOf(oldContent))
+        return status > 0
+    }
+
+    fun deleteNote(content: String): Boolean {
+        val status = SQLiteDatabase.delete("Notes", "Content=?", arrayOf(content))
+        return status > 0
+    }
 }

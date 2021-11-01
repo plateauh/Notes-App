@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         var notesList = DBHelper(applicationContext).getAllNotes()
         notesRecyclerView = findViewById(R.id.notes_rv)
-        notesRecyclerView.adapter = Adapter(notesList)
+        notesRecyclerView.adapter = Adapter(this, applicationContext, notesList)
         notesRecyclerView.layoutManager = LinearLayoutManager(this)
 
         messageEditText = findViewById(R.id.message_et)
@@ -30,8 +30,7 @@ class MainActivity : AppCompatActivity() {
             if (messageEditText.text.toString().isNotEmpty()){
                 val isSubmitted = DBHelper(applicationContext).storeNote(messageEditText.text.toString())
                 if (isSubmitted) {
-                    notesList = DBHelper(applicationContext).getAllNotes()
-                    notesRecyclerView.adapter = Adapter(notesList)
+                    (notesRecyclerView.adapter as Adapter).update()
                     Toast.makeText(this, "Note added successfully!", Toast.LENGTH_SHORT).show()
                     messageEditText.setText("")
                 }
