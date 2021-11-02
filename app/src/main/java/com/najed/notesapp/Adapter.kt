@@ -14,9 +14,10 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class Adapter(private val context: Context,
-              private val activity: MainActivity,
-              private var notesList: List<Note>): RecyclerView.Adapter<Adapter.ItemViewHolder>() {
+class Adapter(private val activity: MainActivity): RecyclerView.Adapter<Adapter.ItemViewHolder>() {
+
+    private var notesList = listOf<Note>()
+
     class ItemViewHolder(val binding: NoteItemBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -27,27 +28,21 @@ class Adapter(private val context: Context,
         holder.binding.apply {
             noteTv.text = notesList[position].content
 
-            if (position % 2 == 0)
-                noteLl.setBackgroundColor(ContextCompat.getColor(context, R.color.gray))
-            else
-                noteLl.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-
             editBtn.setOnClickListener {
                 activity.alert(notesList[position])
             }
 
             deleteBtn.setOnClickListener {
-                CoroutineScope(IO).launch {
-                    NotesDatabase.getInstance(context).NoteDao().deleteNote(notesList[position])
-                    notesList = NotesDatabase.getInstance(context).NoteDao().getAllNotes()
-                    withContext(Main) {
-                        notifyDataSetChanged()
-                    } // sol
-                } // fa
+                activity.viewModel.deleteNote(notesList[position])
             } // mi
         } // re
     } // do
 
     override fun getItemCount() = notesList.size
+
+    fun update(notes: List<Note>){
+        notesList = notes
+        notifyDataSetChanged()
+    }
 
 }
