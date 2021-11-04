@@ -17,6 +17,7 @@ class MainActivityViewModel(app: Application): AndroidViewModel(app) {
     private val notes: MutableLiveData<List<Note>> = MutableLiveData()
 
     fun getNotes(): LiveData<List<Note>>{
+        setNotes()
         return notes
     }
 
@@ -26,7 +27,7 @@ class MainActivityViewModel(app: Application): AndroidViewModel(app) {
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         document.data.map {
-                            (key, value) -> temp.add(Note(key, value.toString())) // potential error
+                            (key, value) -> temp.add(Note(document.id, value.toString()))
                         }
                         notes.postValue(temp)
                     }
@@ -51,9 +52,26 @@ class MainActivityViewModel(app: Application): AndroidViewModel(app) {
     }
 
     fun updateNote(oldNote: Note, newNote: Note) {
-
+        val document = notesCollection.document(oldNote.id)
+        document.update("content", newNote.content)
+            .addOnSuccessListener {
+                Log.d("Note", "Note ${oldNote.id} updated")
+            }
+            .addOnFailureListener {
+                Log.d("Note", "Note ${oldNote.id} not updated \n${it.message}")
+            }
+        setNotes()
     }
 
     fun deleteNote(note: Note) {
+        val document = notesCollection.document(note.id)
+        document.delete()
+            .addOnSuccessListener {
+                Log.d("Note", "Note ${note.id} deleted")
+            }
+            .addOnFailureListener {
+                Log.d("Note", "Note ${note.id} not deleted")
+            }
+        setNotes()
     }
 }
