@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        viewModel.getAllNotes().observe(this, {
+        viewModel.getNotes().observe(this, {
             notesList -> notesAdapter.update(notesList)
         })
 
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         submitButton = findViewById(R.id.submit_btn)
         submitButton.setOnClickListener {
             if (messageEditText.text.toString().isNotEmpty()){
-                viewModel.addNote(Note(0, messageEditText.text.toString()))
+                viewModel.addNote(Note("", messageEditText.text.toString()))
                 messageEditText.setText("")
             }
             else {

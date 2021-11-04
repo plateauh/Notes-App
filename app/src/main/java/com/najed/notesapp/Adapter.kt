@@ -1,18 +1,10 @@
 package com.najed.notesapp
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.najed.notesapp.databinding.NoteItemBinding
 import com.najed.notesapp.db.Note
-import com.najed.notesapp.db.NotesDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class Adapter(private val activity: MainActivity): RecyclerView.Adapter<Adapter.ItemViewHolder>() {
 

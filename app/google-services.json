@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "800820500711",
+    "project_id": "notes-app-79cbc",
+    "storage_bucket": "notes-app-79cbc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800820500711:android:0d76e0fb7cede52a2daa42",
+        "android_client_info": {
+          "package_name": "com.najed.notesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800820500711-gno5jd7mtbhjofiagg7vpkvi1qieeh3l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtzyyEwuWcVyagtLDz_I_P-dLNDx5g84s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800820500711-gno5jd7mtbhjofiagg7vpkvi1qieeh3l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
