@@ -26,11 +26,10 @@ class MainActivityViewModel(app: Application): AndroidViewModel(app) {
         notesCollection.get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
-                        document.data.map {
-                            (key, value) -> temp.add(Note(document.id, value.toString()))
-                        }
-                        notes.postValue(temp)
+                        temp.add(Note(document.id, document["content"].toString()))
                     }
+                    temp.sortBy { it.content }
+                    notes.postValue(temp)
                 }
                 .addOnFailureListener { e ->
                     Log.d("Note", "Exception setting notes ${e.message}")
