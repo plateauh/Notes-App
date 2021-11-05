@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.najed.notesapp.databinding.NoteItemBinding
-import com.najed.notesapp.db.Note
+import com.najed.notesapp.Models.Note
 
-class Adapter(private val activity: MainActivity): RecyclerView.Adapter<Adapter.ItemViewHolder>() {
+class Adapter(private val fragment: AllNotesFragment): RecyclerView.Adapter<Adapter.ItemViewHolder>() {
 
     private var notesList = listOf<Note>()
 
@@ -17,15 +17,16 @@ class Adapter(private val activity: MainActivity): RecyclerView.Adapter<Adapter.
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        val note = notesList[position]
         holder.binding.apply {
-            noteTv.text = notesList[position].content
+            noteTv.text = note.content
 
             editBtn.setOnClickListener {
-                activity.alert(notesList[position])
+                fragment.navigate(note)
             }
 
             deleteBtn.setOnClickListener {
-                activity.viewModel.deleteNote(notesList[position])
+                fragment.viewModel.deleteNote(notesList[position])
             } // mi
         } // re
     } // do

@@ -8,8 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.type.Date
-import com.najed.notesapp.db.Note
+import com.najed.notesapp.Models.Note
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -34,7 +33,7 @@ class MainActivityViewModel(app: Application): AndroidViewModel(app) {
                     notes.postValue(temp)
                 }
                 .addOnFailureListener { e ->
-                    Log.d("Note", "Exception setting notes ${e.message}")
+                    Log.i("Note", "Exception setting notes ${e.message}")
                 }
     }
 
@@ -45,10 +44,10 @@ class MainActivityViewModel(app: Application): AndroidViewModel(app) {
             )
             notesCollection.add(noteHashMap)
                     .addOnSuccessListener {
-                        Log.d("Note", "Note added")
+                        Log.i("Note", "Note ${it.id} added")
                     }
                     .addOnFailureListener {
-                        Log.d("Note", "Note not added: ${it.message}")
+                        Log.i("Note", "Note not added: ${it.message}")
                     }
             setNotes()
         }
@@ -58,10 +57,10 @@ class MainActivityViewModel(app: Application): AndroidViewModel(app) {
         val document = notesCollection.document(oldNote.id)
         document.update("content", newNote.content)
             .addOnSuccessListener {
-                Log.d("Note", "Note ${oldNote.id} updated")
+                Log.i("Note", "Note ${oldNote.id} updated")
             }
             .addOnFailureListener {
-                Log.d("Note", "Note ${oldNote.id} not updated \n${it.message}")
+                Log.i("Note", "Note ${oldNote.id} not updated \n${it.message}")
             }
         setNotes()
     }
@@ -70,10 +69,10 @@ class MainActivityViewModel(app: Application): AndroidViewModel(app) {
         val document = notesCollection.document(note.id)
         document.delete()
             .addOnSuccessListener {
-                Log.d("Note", "Note ${note.id} deleted")
+                Log.i("Note", "Note ${note.id} deleted")
             }
             .addOnFailureListener {
-                Log.d("Note", "Note ${note.id} not deleted")
+                Log.i("Note", "Note ${note.id} not deleted")
             }
         setNotes()
     }
