@@ -5,7 +5,10 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.type.Date
 import com.najed.notesapp.db.Note
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -23,12 +26,11 @@ class MainActivityViewModel(app: Application): AndroidViewModel(app) {
 
     private fun setNotes() {
         val temp = arrayListOf<Note>()
-        notesCollection.get()
+        notesCollection.orderBy("timestamp").get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
-                        temp.add(Note(document.id, document["content"].toString()))
+                        temp.add(Note(document.id, document["content"].toString(), document["timestamp"] as Timestamp?))
                     }
-                    temp.sortBy { it.content }
                     notes.postValue(temp)
                 }
                 .addOnFailureListener { e ->
@@ -38,7 +40,9 @@ class MainActivityViewModel(app: Application): AndroidViewModel(app) {
 
     fun addNote(note: Note) {
         CoroutineScope(IO).launch {
-            val noteHashMap = hashMapOf("content" to note.content)
+            val noteHashMap = hashMapOf("content" to note.content,
+                    "timestamp" to FieldValue.serverTimestamp()
+            )
             notesCollection.add(noteHashMap)
                     .addOnSuccessListener {
                         Log.d("Note", "Note added")
